@@ -352,7 +352,7 @@ $(x+y)^p = x^p + y^p + C_p^1 x^(p-1) y + ... + C_p^(p-1) x y^(p-1) + y^p = x^p +
 #proof[
   设 $G = {eta_1 = e, ..., eta_n}, |G| = n$. 下证对于 $m > n$, $E$ 中的任意 $u_1, ..., u_m$ 是线性相关的. 考虑 $eta_j (x_1mu_1  + ... + x_mu_m) = x_1 eta_j(mu_1) + ... + x_m eta_j(mu_m) = 0$, 一定有非零解, 所以存在 $(x_1, ..., x_m) in E^m$. 下证 $x_j in F$.
 
-  我们从这些解挑一个含0元素最多的解, 记为 $小= x_1, ..., x_m$, 不妨假设 $x_1 != 0, x_1 = 1$, 下证 $x_2, ..., x_m in F$. 假设 $x_2 in.not F$, 则存在 $eta in G$ 使得 $eta(x_2) != x_2$, 考虑 $eta(x) = (1, eta(x_2), ..., eta(x_m))$, 显然 $eta(x)$ 仍是方程的解, 且 $eta(x)$ 0 的个数和 $x$ 中个数一样多.
+  我们从这些解挑一个含0元素最多的解, 记为 $x = x_1, ..., x_m$, 不妨假设 $x_1 != 0, x_1 = 1$, 下证 $x_2, ..., x_m in F$. 假设 $x_2 in.not F$, 则存在 $eta in G$ 使得 $eta(x_2) != x_2$, 考虑 $eta(x) = (1, eta(x_2), ..., eta(x_m))$, 显然 $eta(x)$ 仍是方程的解, 且 $eta(x)$ 0 的个数和 $x$ 中个数一样多.
 
   考虑 $eta(x) - x$ 仍然是方程组的解, 但包含更多的0, 另一方面 $eta(x_2) - x_2 !=0 $, 矛盾!
 ]
@@ -370,7 +370,118 @@ Q2. 有 $E$ 域, $G <= "Aut"(E)$, 我们有 $F = "Inv"(G)$, 其中 $E "/" F$ 是
 
 而对于 Q1, 则不能保证, Galois 理论研究的就是在什么样的有限扩张 $E "/" F$ 可以使得 $"Inv"("Gal"(E "/" F)) = F$.
 
+#example[
+  1. $E = QQ(sqrt(2)), F = QQ$, 易知 $"Gal"(E "/" F) = { id }$, 所以 $F' = E != F$. 我们考虑 $alpha = root(3, 2)$, 极小多项式 $f(x) = x^3 - 2 = (x-alpha)(x^2 + alpha x + alpha^2)$. 可以看到另外两个复数根都不在 $E$ 中, 方程的其他根没有 $E$ 中.
+  2. $F = FF_2(T), E = F(sqrt(T)), sqrt(T) = s$, $E$ 可以写成 $"Span"_T (1,s)$, 考虑 $sigma: E -> E$ 是保 $F$ 的一个自同构, $sigma(1) = 1, sigma(s) = u$. 因为 $s^2 = T$, 所以 $sigma(s)^2 = sigma(T) = T$, 即 $u^2 = T$. 考虑 $u = a + b s, a, b in F$, $u^2 = a^2 + b^2 T = T$, 得到 $a^2 = T(1+b^2) = T(1+b)^2$. 考虑两边的次数, 只能有 $a = 0, b = 1$, 所以 $u = s$, 即 $sigma (s) =s$, 所以 $F' = E$.
+]
+
+为了避免这两种坏情况, 我们后面要引入分裂域, 正规扩张等概念.
+对于这些问题的深入探讨, 要留到最后一部分, 等我们讨论完环论和群论的基础知识.
+
 = 环与模
+
+== 定义与例子
+
+#definition("环")[
+  设 $R$ 是一个集合, 定义了加法运算 $+: R times R -> R$, 以及乘法运算 $*: R times R -> R$, 满足以下条件:
+  1. 对于任意 $a, b, c in R$, 有 $a + (b + c) = (a + b) + c$.
+  2. 对于任意 $a, b in R$, 有 $a + b = b + a$.
+  3. 存在 $0 in R$, 使得对于任意 $a in R$, 有 $a + 0 = a$.
+  4. 对于任意 $a in R$, 存在 $-a in R$, 使得 $a + (-a) = 0$.
+  5. 对于任意 $a, b, c in R$, 有 $a(b c) = (a b) c$.
+  6. 对于任意 $a, b, c in R$, 有 $a(b + c) = a b + a c$.
+  7. 对于任意 $a, b, c in R$, 有 $(a + b) c = a c + b c$.
+
+  我们称 $(R, +, dot)$ 构成一个环. 
+  
+  若存在 $1_R in R$ 满足 $a 1_R = 1_R a = a$, 称 $1_R$ 为单位元, 这样的环称为幺环.
+
+  若 $a b = b a$, 我们称 $R$ 是交换环.
+]
+
+#example("环")[
+  1. $ZZ, ZZ_m = {0, 1, dots, m -1}$.
+  2. $QQ, RR, CC$ 等所有的域都是环.
+  3. 多项式环.
+  4. 有线性空间 $V$, 则 $"End"(V)$ 是一个环.
+  5. 考虑 $R = m ZZ, m in NN, m >= 2$. $R$ 没有单位元.
+  6. $ZZ[i]$ 为 Gauss 整数环. $ZZ[eta_m], eta_m = e^(2pi i / n)$.
+  7. 设集合 $X$, 环 $R$, $R^X = {f: X -> R}$, 定义 $f + g = x |-> f(x) + g(x)$, $f g = x |-> f(x) g(x)$, 则 $R^X$ 是一个环.
+  8. 假设 $G$ 是有限群, $F$ 是群, 我们定义 $R = "Span"_F(G)$, 不难按定义写出 $R$ 的加法和乘法, 叫做 $G$ 的群代数, 这是群表示论的基础.
+  9. $HH = "Span"_RR (1, i, j, k)$,其中 $1, i, j , k$ 是四元数, 定义 $i^2 = j^2 = k^2 = -1, i j = k, j k = i, k i = j, j i = -k, k j = -i, i k = -j$, 这是一个含有单位, 非交换, 非零元可逆的环. 容易看出 $(a + b i + c j + d k)(a - b i - c j - d k ) = a^2 + b^2 + c^2 + d^2 > 0$.
+]
+
+#definition("模")[
+  设 $R$ 是一个环, $M$ 是一个集合, 定义了加法运算 $+: M times M -> M$, 以及乘法运算 $*: R times M -> M$, 满足以下条件:
+  1. 对于任意 $a, b, c in M$, 有 $a + (b + c) = (a + b) + c$.
+  2. 对于任意 $a, b in M$, 有 $a + b = b + a$.
+  3. 存在 $0 in M$, 使得对于任意 $a in M$, 有 $a + 0 = a$.
+  4. 对于任意 $a in M$, 存在 $-a in M$, 使得 $a + (-a) = 0$.
+  5. 对于任意 $a, b in R$, $x in M$, 有 $a(x + y) = a x + a y$.
+  6. 对于任意 $a, b in R$, $x in M$, 有 $(a + b) x = a x + b x$.
+  7. 对于任意 $a, b in R$, $x in M$, 有 $(a b) x = a (b x)$.
+  8. 对于任意 $x in M$, 有 $1 x = x$.
+
+  我们称 $(M, +, dot)$ 构成一个 左$R$-模. 同理可以定义右$R$-模.
+]
+
+#example("模")[
+  1. 域上的线性空间是模.
+  2. $ZZ_m, ZZ times ZZ_m -> ZZ_m$, 定义 $(a, overline(x)) |-> overline(a dot x)$. 更进一步的, 如果 $G$ 是交换群, 可以定义 $ZZ times G -> G$, 其中 $(a, g) |-> g^a$, 我们称为 $ZZ-j$ 模.
+  3. (还有很多例子但我懒得写了)
+]
+
+== 环与模同态
+
+#definition("环同态")[
+  设 $R, S$ 是两个环, $phi: R -> S$ 是一个映射, 若满足:
+  1. 对于任意 $a, b in R$, 有 $phi(a + b) = phi(a) + phi(b)$.
+  2. 对于任意 $a, b in R$, 有 $phi(a b) = phi(a) phi(b)$.
+  则称 $phi$ 是一个环同态. 若 $R, S$ 都是幺环, 且 $phi(1_R) = 1_S$, 则称 $phi$ 是幺环同态.
+]
+
+其他的一些我们所期待的性质都是可以推出的, 例如 $phi(0) = 0$, $phi(-a) = -phi(a)$, $phi(a^n) = phi(a)^n$ 等.
+
+#definition("模同态")[
+  设 $R$ 是环, $M, N$ 是两个模, $phi: M -> N$ 是一个映射, 若满足:
+  1. 对于任意 $a, b in M$, 有 $phi(a + b) = phi(a) + phi(b)$.
+  2. 对于任意 $a in R$, $x in M$, 有 $phi(a x) = a phi(x)$.
+  则称 $phi$ 是一个模同态.
+]
+
+#example[
+  1. 考虑 $ZZ -> ZZ_m$ 上的一个映射 $a |-> (n mod m)$ 是环同态. 有趣的是不存在环同态 $ZZ_m -> ZZ$. 假设存在, 则 $phi(1) = 1, phi(2) = 2, ..., phi(m) = m$, 但是 $phi(m) = phi(0) = 0$, 矛盾.
+  2. 1 中的例子不难推广到 $ZZ_(m n) -> ZZ_m$.
+  3. $R = F[x]$, 对于 $alpha in F$, 定义 $phi(f) = f(alpha)$, 则 $phi$ 是一个环同态.
+]
+
+#definition[
+  设 $phi: R -> S$ 是一个环同态, 则 $ker(phi) = {a in R | phi(a) = 0}$, 称为 $phi$ 的核.
+  而 $"img" (R) = {phi(a) | a in R}$, 称为 $phi$ 的像.
+]
+
+对于模也是一样的, 我们不再赘述.
+
+注意到环的核与像都是在加法与乘法下封闭的, 我们可以从中提炼出子环的概念.
+
+#definition[
+  设 $R$ 是一个环, $S subset.eq R$, 若满足 $S$ 是 $R$ 的子集, 且对于任意 $a, b in S$, 有 $a + b, a b in S$, 则称 $S$ 是 $R$ 的子环.
+]
+
+显然, 对于环同态, 它的核与像是一个子环. 不过核有一个更强的性质: $a in ker(phi), b in R => a b in ker(phi)$, 这是因为 $phi(a b) = phi(a) phi(b) = 0 phi(b) = 0$.
+这启示我们子环和子环之间也是不同的. 对于这种子环我称为理想.
+
+#definition[
+  设 $R$ 是一个环, $I subset.eq R$, 若满足 $I$ 是 $R$ 的子集, 且对于任意 $a in I, b in R$, 有 $a b in I$, 则称 $I$ 是 $R$ 的左理想. 右理想类似定义.
+]
+
+不难看出, 对于交换环来说 $a R$ 自然构成一个理想, 因为 $a x + a b = a (x + y), a x a y = = a (a x y)$. 这种理想称为由 $a$ 生成的主理想.
+
+#example[
+  1. $ZZ$ 中的理想都是主理想. 假设 $I$ 是 $ZZ$ 的一个理想, 且 $I != {0}$, 则存在 $m in I, m > 0$ 是最小的, 则 $I = m ZZ$. 若存在 $n > 0$ 不能表示为 $m$ 的倍数, 则根据裴蜀定理, 存在 $x, y in ZZ$ 使得 $m x + n y = gcd(m, n) < m$, 矛盾.
+  2. 考虑 $R = ZZ(sqrt(-5))$, $I = { a + b sqrt(-5) | a equiv b mod 2 }$, 不难证明 $I$ 是 $R$ 的一个理想. 它不是主理想, 可以视作 $I = "Span" {2, 1 + sqrt(-5)}$.
+]
+
 
 = 群与群作用
 
