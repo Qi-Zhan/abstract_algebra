@@ -533,7 +533,7 @@ Q2. 有 $E$ 域, $G <= "Aut"(E)$, 我们有 $F = "Inv"(G)$, 其中 $E "/" F$ 是
   2. $CC = RR[x] "/" (x^2 + 1)$
 ]
 
-== 同态基本定理
+== 同态基本定理与中国剩余定理
 
 #theorem("第一同态定理")[
   设 $phi: R -> S$ 是一个环同态, 则 $R "/" ker(phi) tilde.equiv "img"(phi)$.
@@ -581,6 +581,110 @@ Q2. 有 $E$ 域, $G <= "Aut"(E)$, 我们有 $F = "Inv"(G)$, 其中 $E "/" F$ 是
 
 #theorem("中国剩余定理")[
   设 $I, J$ 是 $R$ 的互素理想, 则 $R "/" (I sect J) tilde.equiv (R "/" I) times (R "/" J)$.
+]
+
+#proof[
+  1. 构造 $phi: R -> (R "/" I) times (R "/") J$, $x -> (x + I, x + J)$.
+  2. 由于 $I + J = R => x = y + z, y in I, z in J$, 所以 $phi(x) = (z + I, y + J)$.
+  3. 我们要说明 $phi$ 是满的.
+  4. 不难看出 $ker(phi) = I sect J$. 由环同构第一定理知结论成立.
+]
+
+接下来我们将推广到多个理想的情况, 这时我们需要额外的条件.
+
+#definition("理想的乘积")[
+  设 $I, J$ 是 $R $ 的理想, 定义 $I J = {sum_(i=1)^n a_i b_i | a_i in I, b_i in J, n in NN}$. 这是一个理想.
+]
+
+$I J subset.eq I sect J$, 但一般来说不相等. 例如 $R = ZZ, I = 2 ZZ, J = 2 ZZ$, 则 $I J = 4 ZZ, I sect J = 2 ZZ$.
+
+我们关注什么时候 $I J = I sect J$.
+
+#lemma[
+  设 $R$ 是一个交换幺环, $I_1, ..., I_n$ 是 $R$ 的理想, 且两两互素, 则
+  1. $I_1 ... I_n = I_1 sect ... sect I_n$.
+  2. $I_1 + ... + I_(n-1) $ 与 $I_n$ 互素.
+]
+
+#proof[
+  采用数学归纳法.
+  1. 当 $n=2$ 时 (2) 是显然的. 对于 (1), 显然有 $I_1 I_2 subset.eq I_1 sect I_2$. 考虑 $x in I_1 sect I_2$, 由 $I_1 + I_2 = R$, 所以 $1_R = y + z, y in I_1, z in I_2$. 于是 $x = x 1_R = x y + x z = y x + x z in I_1 I_2$.
+  2. 当 $n > 2$ 时, $I_n + I_k = R$, 所以 $R = Pi_(k=1)^(n-1) (I_n + I_k) = I_n + I_1 ... I_(n-1) <=> I_n + I_1 sect ... sect I_(n-1) = R$. (1) 同样由归纳假设易得.
+]
+
+由这一引理和前面二元版本的中国剩余定理, 我们可以得到多元版本的中国剩余定理.
+
+#theorem("中国剩余定理")[
+  设 $R$ 是交换幺环, $I_1, ..., I_n$ 是两两互素的理想, 此时有同构 $R slash (I_1 sect ... sect I_n) = (R slash I_1) times ... times (R slash I_n)$
+]
+
+#example[
+  $R = ZZ, I_1 = 3ZZ, I_2 = 5ZZ, I_3 = 7ZZ$, 可以得到 $R slash (I_1 sect I_2 sect I_3) tilde.equiv R slash I_1 times R slash I_2 times R slash I_3$, 即 $ZZ slash 105 ZZ tilde.equiv ZZ slash 3 ZZ times ZZ slash 5 ZZ times ZZ slash 7 ZZ$.
+]
+
+== 整环与整除性
+
+环 $supset.eq$ 幺环 $supset.eq$ 交换幺环 $supset.eq$ *整环* $supset.eq$ 整闭整环 $supset.eq$ GCD 环 $supset.eq$ *唯一分解整环* $supset.eq$ *主理想整环* $supset.eq$ *欧几里得整环* $supset.eq$ 域. 
+
+我们这里只涉及部分概念.
+
+#definition("整环")[
+  设 $R$ 是一个非平凡的交换幺环, 若 $R$ 没有零因子, 则称 $R$ 是一个整环.
+]
+
+我们知道对于整数环 $ZZ$, 存在有理数域 $QQ supset.eq ZZ$, 一个自然的想法是对于任意整环 $R$, 是否存在域 $F$ 使得 $R supset.eq F$? 这个问题的答案是肯定的.
+
+我们首先定义 $S = R slash {0}$, 显然 $S$ 在乘法下依旧封闭且 $1_R in S$.
+下面要构造一个域 $F$, 其中的元素形如 $r / s, r in R, s in S$.
+考虑 $(r, s) in R times S$, 定义等价关系 $(r_1, s_1) ~ (r_2, s_2) <=> r_1 s_2 = r_2 s_1$.
+
+考虑 $F = R times S slash ~$, 我们可以在上面定义加法和乘法, 容易验证这是一个域, 我们称为 $R$ 的分式域.
+
+#theorem[
+  设 $R$ 是一个整环, $F$ 是其分式域, 若有另一个域 $F'$ 以及单的环同态 $phi: R -> F'$, 则存在唯一的域同态 $psi: F -> F'$ 使得 $phi = psi compose i_R$.
+  换句话说, 分式域是整环的最小域.
+]
+
+#definition("素理想")[
+  设 $R$ 是一个非零交换幺环, $I$ 是 $R$ 的理想, 若 $R slash I$ 是一个整环, 则称 $I$ 是 $R$ 的素理想.
+]
+
+#theorem[
+  $I$ 是素理想 $<=>$ $I != R$ 且对于任意 $a, b in R$, 若 $a b in I$, 则 $a in I$ 或者 $b in I$.
+]
+
+#proof[
+  1.($=>$) $R slash I$ 非零可推出 $I != R$. $a b in I => a b + I = (a + I)(b + I) = 0_(R slash I)$. $R slash I$ 是整环可推出 $a + I =0 or b + I =0$, 即 $a in I or b in I$.
+  2. 反之, $I != R$ 可推出 $R slash I$ 非零. 考虑 $a + I, b + I in R slash I$, 若 $(a + I)(b + I) = 0$, 则 $a b in I$, 由条件知 $a in I or b in I$, 即 $a + I = 0 or b + I = 0$.
+]
+
+#definition("极大理想")[
+  设 $R$ 是一个非零交换幺环, $m$ 是 $R$ 的理想, 若 $R slash m$ 是一个域, 则称 $m$ 是 $R$ 的极大理想.
+]
+
+显然极大理想是素理想. 和素理想一样, 极大理想也有另一种定义方式:
+
+#theorem[
+  $m$ 是极大理想 $<=>$ $m != R$ 且对于包含 $m$ 的理想只能是 $m$ 或者 $R$.
+]
+
+#proof[
+  1. $=>$ $R slash m$ 是域, 所以 $R slash m$ 的理想只能是 $0$ 或者 $R slash m$, 所以 $R$ 中包含 $m$ 的理想只能是 $m$ 或者 $R$.
+  2. 若 $R slash m$ 不是域, 则一定存在非平凡的理想, 则 $m$ 一定含于这个非平凡理想, 与条件矛盾.
+]
+
+#definition("整除")[
+  设 $R$ 是一个整环, $a, b in R$, 若存在 $c in R$ 使得 $a = b c$, 则称 $b$ 整除 $a$, 记作 $b | a$.
+]
+
+#definition("单位")[
+  设 $R$ 是一个整环, 若 $a$ 有乘法逆, 则称 $a$ 是一个单位. $R$ 中所有单位构成一个群, 记为 $R^x$.
+]
+
+#example[
+  1. $R = ZZ, R^x = {1, -1}$.
+  2. $R = ZZ[i], R^x = {1, -1, i, -i}$.
+  3. $R = ZZ[sqrt(3)]$, 牵扯到 Pell 方程.
 ]
 
 = 群与群作用
