@@ -818,9 +818,45 @@ $I J subset.eq I sect J$, 但一般来说不相等. 例如 $R = ZZ, I = 2 ZZ, J 
     2. $"SL"(V) = {phi in "GL"(V) | det(phi) = 1}$, 称为特殊线性群.
     3. $O(V) = {phi in "GL"(V) | phi "保内积"}$, 称为正交群.
     4. $"SO"(V) = {phi in "O"(V) | det(phi) = 1}$, 称为特殊正交群.
-  4. 二面体群
+  4. 多面体群
 ]
 
+== 同态
 
+#definition[
+  设 $(G, dot)$ 和 $(H, *)$ 是两个群, $phi: G -> H$ 是一个映射, 若满足 $phi(a dot b) = phi(a) * phi(b)$, 则称 $phi$ 是一个群同态.
+]
+
+== 子群, 正规子群与商群
+
+#definition[
+  设 $(G, dot)$ 是一个群, $H subset.eq G$, 若 $H$ 是 $G$ 的子集, 且对于任意 $a, b in H$, 有 $a dot b in H$ 且 $a^(-1) in H$, 则称 $H$ 是 $G$ 的子群.
+]
+
+#definition("陪集")[
+  设 $G$ 是一个群, $H subset.eq G$ 是一个子群, $a in G$, 定义左陪集 $a H = {a h | h in H} eq.delta G slash H$, 右陪集 $H a = {h a | h in H} eq.delta H "/" G$.
+]
+
+#definition("正规子群")[
+  设 $G$ 是一个群, $H subset.eq G$ 是一个子群, 若对于任意 $a in G$, 有 $a H = H a$, 则称 $H$ 是 $G$ 的正规子群, 记为 $H lt.tri G$.
+]
+
+#definition[
+  设 $H lt.tri G$, 在 $G slash H$ 上定义 $(x H) (y H) = (x y) H$, 则 $G slash H$ 是一个群, 称为 $G$ 关于 $H$ 的商群.
+]
+
+#example[
+  1. 在交换群上, 正规子群等价于子群.
+  2. $G_1 = {1, c, c^2, c^3}$, $H = {1, c^2}$, $G_1 slash H = {H, c H}$; 考虑另一个四个元素的群 $G_2 = {1, a, b, a b}$, $H = {1, a}$, $G_2 slash H = {H, b H}$.
+  我们可以发现 $H_1 tilde.equiv H_2, G_1 slash H_1 tilde.equiv G_2 tilde.equiv H_2$, 然而 $G_1 != G_2$.
+  3. 定义群的中心 $Z(G) = {a in G | forall b in G, a b = b a}$, 容易验证 $Z(G) lt.tri G$.
+  4. 定义交换子 $[a, b] = a^(-1) b^(-1) a b$.
+  $[a, b]^(-1) = [b, a], g[a,b]g^(-1) = [g a g^(-1), g b g^(-1)]$. 所有交换子也构成子群, 而事实上是正规子群, 记为 $[G, G]$.
+  $G slash [G, G]$ 是一个交换群.
+]
+
+#theorem[
+  $|H| | |G|$.
+]
 
 = Galois 理论
