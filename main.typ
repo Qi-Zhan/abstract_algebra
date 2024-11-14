@@ -821,11 +821,6 @@ $I J subset.eq I sect J$, 但一般来说不相等. 例如 $R = ZZ, I = 2 ZZ, J 
   4. 多面体群
 ]
 
-== 同态
-
-#definition[
-  设 $(G, dot)$ 和 $(H, *)$ 是两个群, $phi: G -> H$ 是一个映射, 若满足 $phi(a dot b) = phi(a) * phi(b)$, 则称 $phi$ 是一个群同态.
-]
 
 == 子群, 正规子群与商群
 
@@ -856,7 +851,132 @@ $I J subset.eq I sect J$, 但一般来说不相等. 例如 $R = ZZ, I = 2 ZZ, J 
 ]
 
 #theorem[
-  $|H| | |G|$.
+  子群 $|H| | |G|$.
+]
+
+== 同态基本定理
+
+#definition[
+  设 $(G, dot)$ 和 $(H, *)$ 是两个群, $phi: G -> H$ 是一个映射, 若满足 $phi(a dot b) = phi(a) * phi(b)$, 则称 $phi$ 是一个群同态.
+]
+
+#theorem[
+  设群同态 $phi: G -> H$, 则 $G slash ker(phi) tilde.equiv "Img"(phi)$.
+]
+
+#theorem[
+  若群同态 $phi: G -> H$ 是满的, 则 $H tilde.equiv G slash ker(phi)$.
+]
+
+#definition[
+  设 $H, K$ 是 $G$ 的子群, 定义 $H K = {h k | h in H, k in K}$.
+  若 $K$ 是正规子群, 则 $H K$ 是子群, 且 $K lt.tri H K$.
+]
+
+#example[
+  $G = {1, r, r^2, s, s r, s r^2}$,
+  $H = {1, s}$, $K = {1, s r}$,
+  $H K$ 不是子群.
+]
+
+三同构定理的证明和之前环的情况类似, 我们不再赘述.
+
+#definition[
+  1. 设 $G$ 是有限群, 若有 $G$ 的子群链 $G = G_0 > G_1 > ... > G_k = k$ 满足每个 $G_i$ 都是 $G_(i-1)$ 的正规子群, 则称 $k$ 是 $k$-次正规子群.
+  2. 若有 $G$ 的子群链 $G = G_0 > G_1 > ... > G_k = {e}$ 满足每个 $G_i$ 都是 $G_(i-1)$ 的正规子群, 则称为一个次正规子群链.
+  3. 对于一个次正规子群链, 若 $G_i slash G_(i-1)$ 都是单群(没有非平凡的正规子群), 则称为一个合成列, 这些单群称为合成因子.
+]
+
+#theorem("Jordan-Holder 定理")[
+  有限群 $G$ 的极小合成列有相同的长度, 且合成因子在同构意义下唯一.
+  即给定 $G = G_0 lt.tri G_1 lt.tri ... lt.tri G_s = {e}$, $G = H_0 lt.tri H_1 lt.tri ... lt.tri H_t = {e}$, 要证 $t = s$ 且 $G_i slash G_(i-1)$ 与 $H_i slash H_(i-1)$ 在调整顺序后两两同构.
+]
+
+#proof[
+  对 $s$ 归纳.
+  - 当 $s = 1$ 时, $G$ 是单群, 显然成立.
+  - 假设 $s-1$ 时成立, 考虑 $s$ 的情形. 若 $G_1 = H_1$, 则结论显然成立.
+  若 $G_1 != H_1$, 因为 $G_0 slash G_1, H_0 slash H_1$ 都是单群, 所以 $G_1, H_1$ 都是极大正规子群. 考虑 $G' = G_1 dot H_1$ 也是正规的.
+  可见 $G' = G$. 设 $G_1 and H_1 = N_2$.
+  则 $G_0 slash G_1 = G_1 dot H_1 slash G_1 = H_1 slash G_1 and H_1 = H_1 slash N_2$, $H_0 slash H_1 = G_1 slash N_2$.
+  取极小合成列 $N_2 lt.tri N_3 lt.tri ... lt.tri N_r = {e}$.
+  构造 $G = G_0 lt.tri G_1 lt.tri N_2 lt.tri ... lt.tri N_r = H_0 lt.tri H_1 lt.tri N_2 lt.tri ... lt.tri N_r = {e}$.
+  可得 $r = s, r = t$, 故 $s = t$. 通过这四个合成列的相互关系与归纳假设, 可得结论.
+]
+
+在这一定理基础上, 对于研究所有有限群, 我们可以1. 找出所有有限单群, 2. 在给定合成因子的前提下找出所有 $G$.
+看起来第二个问题比较简单, 但事实上第二个问题到现在也没有很好的算法; 而第一个问题有限单群的分类已经基本完成了:
+
+(1) $ZZ_p$, $p$ 为素数
+(2) $A_n, n >= 5$
+(3) 李型单群
+(4) 从(3)导出的
+(5) 散在单群 26 个
+
+== 群作用与Sylow定理
+
+这一节我们假设 $G$ 是一个有限群, 被作用的空间也是有限的.
+
+#definition[
+  设群 $G$ 与集合 $X$, 若映射 $mu: G times X -> X, (g, x) |-> g x$ 满足:
+  1. $e x = x$
+  2. $(g h) x = g (h x)$
+  则称 $(G, X)$ 是一个群作用.
+]
+
+1. 对于 $g in G$, 考虑 $t_g: X -> X, x |-> g x$ 是一个平移.
+2. 对于 $x in G$, 考虑 $G x = { g x | g in G}$, 称为 $x$ 的轨道. 和陪集一样, 轨道只能相等或者不相交.
+3. 我们还可以定义 $"stab"(x) = {g in G | g x = x}$, 称为 $x$ 的稳定化子群. 若 $"stab"(x) = G$, 则称 $x$ 是一个不动点.
+
+#lemma[
+  存在双射 $G slash "stab"(x) -> G x$.
+]
+
+根据这一引理我们可以得到一个计数的结果:
+$|G_x| = [G: "stab"(x)]$ = $|G|$ / $|"stab"(x)|$.
+
+设 $O = {G x | x in X} subset.eq 2^X$, 构造 $pi: X -> O, x |-> G x$ 满射.
+由选择公理知道存在单射 $theta: O -> X$ 满足 $pi compose theta = id $.
+记 $C = "Img"(theta)$, 与每一个轨道恰好有一个交点, 称为一个截面.
+
+若 $x_1, x_2$ 属于同一个轨道 $G x$, 容易看出来 $"stab"(x_2)$ 与 $"stab"(x_1)$ 只差一个共轭作用.
+
+完成了这些准备工作, 我们考虑 $X = union.big_(x in C) G x$, 可知
+$|X| = sum_(x in C) |G x| = sum_(x in C)[G:"Stab"(x)]$.
+
+下面考虑 $G$ 在自身的共轭作用, 取 $X = G, mu(g, x) = g x g^(-1)$.
+$x$ 的轨道就是 ${g x g^(-1) | g in G}$, 称为 $x$ 的共轭类.
+$x$ 的稳定化子就是中心化子.
+若 $x$ 是不动点, 则是一个平凡共轭类. 若不是, 则称为非平凡共轭类. 非平凡共轭类记 $Tau$.
+
+通过这一区分, 我们知道 $|G| = |Z| + sum_Tau [G: "stab"(x)]$. 这里的后项是非平凡共轭类的集合.
+
+#example[
+  1. 若 $|G| = p^m$, $p$ 为素数, 则称为 $G$ 为一个 $p$ 群, 类方程为 $p^m = |Z| + sum_(x in Tau)[G: C(x)]$. 我们可知 $p | |Z|$.
+  2. 设有 $n$ 个轨道, 则 $n = 1/(|G|) sum_(g in G) | X^g|$, 其中 $X^g = { x in X | g x = x}$.
+  证明: $sum_(g in G) |X^g| = sum_(x in X) | "stab"(x) | = sum_(x in X) (|G|) / (|G x|) = |G| sum_(x in X) 1/(|G x|) = |G| n$.
+]
+
+接下来我们进入 Sylow 定理的讨论. 这一定理在探讨什么时候 $d | |G|$, 问是否存在 $H < G, |H| = d$. Sylow 定理告诉我们当 $d$ 是素数的阶数时, 这一结论是对的.
+
+#lemma[
+  设 $G$ 是有限交换群, $p$ 是素数, $p | |G|$, 则 $G$ 中存在阶数为 $p$ 的元素.
+]
+
+#proof[
+  对群 $G$ 的阶数归纳.
+  - $|G| = 1$, 成立.
+  - 当阶数 $< |G|$ 时交换群都成立, 考虑 $G$. 任取 $a in G, a != e$, 设 $a$ 的阶数为 $m$, 若 $p | m$ 显然可找到这样的 $p$ 阶元; 反之, $H = <a>$ 是正规子群. 考虑 $G slash H$, 由归纳假设...
+]
+
+#theorem[
+  假设有限群 $G$, 素数 $p$, 且 $p^k | |G|$, 则 $G$ 有 $p^k$ 阶子群.
+]
+
+#proof[
+  对 $|G|$ 归纳.
+  - $|G| = 1$, 成立.
+  - 设对 $|G| < n$ 成立, 考虑 $|G| = n$. 有方程 $|G| = |Z| + sum_(x in Tau) [G:C(x)]$. 若 $p$ 不整除 $|Z|$, 则一定存在 $p^k | C(x)$, 成立; 若 $p | |Z|$, 那么由上引理得到 $Z$ 有 $p$ 阶子群 $H = <a>$. $H$ 是 $G$ 的正规子群, 考虑 $G slash H = G', |G'| < |G|$, $p^(k-1) | |G'|$. 由归纳假设得到 $G'$ 有 $p^(k-1)$ 阶子群 $H'$, 那么我们就能得到 $G$ 有 $p^k$ 阶子群.
 ]
 
 = Galois 理论
