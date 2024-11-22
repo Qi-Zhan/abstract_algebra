@@ -1,7 +1,24 @@
-#import "theorems.typ": *
 #import "@preview/commute:0.2.0": node, arr, commutative-diagram
-#show: thm-rules.with(qed-symbol: $square$)
+#import "@preview/ctheorems:1.1.3": *
 #import "template.typ": *
+
+#show: thmrules.with(qed-symbol: $square$)
+
+#set page(width: 16cm, height: auto, margin: 1.5cm)
+#set heading(numbering: "1.1.")
+
+#let theorem = thmbox("theorem", "定理", fill: rgb("#eeffee"))
+#let lemma = thmbox("lemma", "引理", fill: rgb("#eeffee"))
+#let corollary = thmplain(
+  "corollary",
+  "Corollary",
+  base: "theorem",
+  titlefmt: strong
+)
+#let definition = thmbox("definition", "定义", fill: rgb("eeeeff"))
+
+#let example = thmplain("example", "例子")
+#let proof = thmproof("proof", "证明")
 
 #show: template.with(
   title: [抽象代数笔记],
@@ -20,18 +37,6 @@
   accent: "#DC143C",
 )
 #show link: underline
-#let theorem = thm-plain(
-  "定理",
-  outset: 1em,
-  padding: (y: 0.6em),
-  fill: rgb("#eeffee"),
-)
-#let corollary = thm-plain("推论", base: "Theorem")
-#let definition = thm-def("定义", outset: 1em, padding: (y: 0.6em), fill: rgb("#eeeeff"))
-#let remark = thm-rem("注记")
-#let proof = thm-proof("证明")
-#let example = thm-plain("例子")
-#let lemma = thm-plain("引理")
 #set text(
   font: "Songti SC",
 )
@@ -50,9 +55,7 @@
   4. 乘法对加法的分配律成立.
 ]
 
-#remark[
-  我们记 $F^*$ 为 $F$ 中所有非零元素的集合.
-]
+我们记 $F^*$ 为 $F$ 中所有非零元素的集合.
 
 为了说明为什么我们要求 $0_F != 1_F$, 有以下引理:
 
@@ -315,9 +318,7 @@ $(x+y)^p = x^p + y^p + C_p^1 x^(p-1) y + ... + C_p^(p-1) x y^(p-1) + y^p = x^p +
   我们称 $(S, e)$ 是 $X$ 上的对称群.
 ]
 
-#remark[
-  事实上上述的性质其实就是抽象群的定义.
-]
+事实上上述的性质其实就是抽象群的定义.
 
 我们一般不需要研究整个置换, 而是研究一部分的封闭子集, 也就引出了置换群的概念.
 
@@ -357,9 +358,7 @@ $(x+y)^p = x^p + y^p + C_p^1 x^(p-1) y + ... + C_p^(p-1) x y^(p-1) + y^p = x^p +
   考虑 $eta(x) - x$ 仍然是方程组的解, 但包含更多的0, 另一方面 $eta(x_2) - x_2 !=0 $, 矛盾!
 ]
 
-#remark[
-  事实上我们可以证明 $[E: F] = |G|$, 但这需要一些额外的知识.
-]
+事实上我们可以证明 $[E: F] = |G|$, 但这需要一些额外的知识.
 
 有了这两个方向的引理,  我们可以考虑它们的复合, 就有了下面两个问题:
 
@@ -969,7 +968,7 @@ $x$ 的稳定化子就是中心化子.
   - 当阶数 $< |G|$ 时交换群都成立, 考虑 $G$. 任取 $a in G, a != e$, 设 $a$ 的阶数为 $m$, 若 $p | m$ 显然可找到这样的 $p$ 阶元; 反之, $H = <a>$ 是正规子群. 考虑 $G slash H$, 由归纳假设...
 ]
 
-#theorem[
+#theorem("Sylow-I")[
   假设有限群 $G$, 素数 $p$, 且 $p^k | |G|$, 则 $G$ 有 $p^k$ 阶子群.
 ]
 
@@ -977,6 +976,108 @@ $x$ 的稳定化子就是中心化子.
   对 $|G|$ 归纳.
   - $|G| = 1$, 成立.
   - 设对 $|G| < n$ 成立, 考虑 $|G| = n$. 有方程 $|G| = |Z| + sum_(x in Tau) [G:C(x)]$. 若 $p$ 不整除 $|Z|$, 则一定存在 $p^k | C(x)$, 成立; 若 $p | |Z|$, 那么由上引理得到 $Z$ 有 $p$ 阶子群 $H = <a>$. $H$ 是 $G$ 的正规子群, 考虑 $G slash H = G', |G'| < |G|$, $p^(k-1) | |G'|$. 由归纳假设得到 $G'$ 有 $p^(k-1)$ 阶子群 $H'$, 那么我们就能得到 $G$ 有 $p^k$ 阶子群.
+]
+
+
+#definition[
+  1. 若 $|H| = p^k$, 则称 $H$ 叫 p-群.
+  2. 若 $G, p$, $|G|$ 中 $p$ 的阶为 $m$,
+  则该群中的 $p^m$阶子群叫 $p-$Sylow子群.
+]
+
+#theorem("Sylow-II")[
+  群 $G$ 中的任意两个 $p-$Sylow子群都共轭.
+]
+
+一个显然的推论是如果只有一个 Sylow 子群, 则这个群是正规的.
+
+#proof[
+  我们要证明: 设 $P$ 是 $p-$Sylow子群, $H$ 是 $G$ 的 $p$-子群, $|H| = p^k$,
+  则存在 $g in G$, 使得 $H subset.eq g P g^(-1)$.
+
+  考虑群作用: $mu: H times G slash P -> G slash P$, $(h, g P) |-> h_g P$,
+  因为 $|P| = p^m$, 所以 $|G slash P| = (|G|) / p^m$, 从而 $p$ 不整除.
+
+  考虑 $mu$ 的轨道, $|H(g P)| = 1 or p^l, 1 <= l < k$.
+  因为不整除, 所以至少有一个不动点, 所以 $H subset.eq g P g^(-1)$.
+]
+
+#theorem("Sylow-III")[
+  给定群 $G, P$ 同上, 设 $G$ 的 $p-$Sylow 的个数为 $n_P$,
+  再设 $[G:P] = m$, 则 $n_p | m$, 且 $n_p = 1 (mod p)$.
+]
+
+#proof[
+  设 $G$ 的所有子群集合为 $S$, 考虑群作用 $G times S -> S$, $(g, H) |-> g H g^(-1)$.
+  设 $P$ 是 $G$ 的一个 $p-$Sylow 子群, 先问它的稳定化子是什么.
+  由 Sylow-II 定理我们知道 $n_p = |G P| = [G: "stab"(P)] = [G: N_G (P)]$.
+  另一方面, $m = [G:P] = [G: N_G (P)] [N_G (P): P] = n_p [N_G (P): P]$, 从而 $n_p | m$.
+
+  考虑另一个群作用, $P times G slash P -> G slash P$, $(h, g P) |-> h g P$. ...
+]
+
+这些定理实在看的人有点累, 不过我们利用上述三定理可以对有限群的结构做许多有趣的研究.
+
+#example[
+  1. 设 $p, q$ 是素数, $p < q$, 则 $p q$ 阶群 $G$ 一定不是单群.
+  考虑 $G$ 的 $q$-Sylow子群, 那么 $n_q | p, n_q = 1 (mod q)$, 所以 $n_q = 1$, 从而 $G$ 有正规子群.
+  2. 若 $|G| = 2024 = 2^3 . 11 . 23$, $n_(23) | 2^3 . 11, n_(23) = 1 (mod 23)$, 所以 $n_(23) = 1$, 从而 $G$ 有一个 23 阶正规子群.
+  $G slash P_(23) = G_1$, $|G_1| = 2^3 . 11$, $n_(11) | 2^3, n_(11) = 1 (mod 11)$, 所以 $n_(11) = 1$, 从而 $G_1$ 有一个 11 阶正规子群.
+  3. $|G| = 56 =>$ $G$ 不是单群. $n_7 = 1 or n_7 = 8$. 若 $n_7 = 1$, 则 $G$ 有正规子群; 
+  若 $n_7 = 1$, 证毕;
+  若 $n_7 = 8$, 则 $G$ 有 8 个 7 阶子群, 我们断言这些子群的交只能是单位元. 所以 $G$ 中有一个 $e$, 8 x 6 个七阶元, 还剩 7 个元素.
+  再考虑 $2-$Sylow 子群, 阶是 8, 恰好只有一个子群, 所以是正规子群.
+  4. $|G| = 108 => $ $G$ 不是单群.
+]
+
+#theorem[
+  最小的非交换单群是 60 阶的. (就是 $A_5$)
+]
+
+#proof[
+
+1. 平凡群显然是交换.
+2. 素数阶群都交换 $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59$.
+3. pq 型的都不单 $6, 10, 14, 22, 26, 34, 38, 46, 57, 58, 5, 8, 15, 21, 33, 39, 51, 35, 55$.
+4. $p^k$ 阶的都是交换的或者不单 $4, 9, 25, 49, 8, 27, 16, 32$.
+5. $2^2 p$ 型群, $|G| = 12, 20, 28, 44, 52$, 继续利用 Sylow 定理可以解决.
+6. $3^2 p$ 型群, $|G| = 18, 57$, $n_3 = 1$, 不是单群.
+
+还有 24 和 36 阶群, 我们需要引入一个引理
+
+#lemma[
+  若有限群 $G$ 有子群 $H$, $[G:H] = n$, 则 $H$ 一定包含一个 $G$ 的正规子群 $K$, 且 $[G:K] | n!$. 特别的, 如果 $|G|$ 不整除 $n!$, 则 $K$ 是非平凡的正规子群.
+]
+
+考虑 24 阶群, $24 = 2^3 dot 3$.
+由Sylow第三定理则 $n_2 | 3, n_2 = 1 (mod 2)$, 所以 $n_2 = 1 or 3$. 若是第一种情况, 则证毕; 若是第二种情况, 设 $H$ 是一个八阶子群, 且 $24 > 3! = 6$, 由引理知存在正规子群 $K$.
+
+36阶群同理.
+]
+
+== 对称群
+
+上一节我们已经知道 60 阶以下的群都是交换群或者不单的, 我们接下来要构造并证明一个 60 阶的非交换单群.
+
+对于奇置换, 偶置换, 轮换, 循环等等定义我们不再赘述.
+
+偶置换构成的群是 $A_n$, 它是 $S_n$ 的正规子群, 且 $|S_n : A_n| = 2$.
+
+#lemma[
+  $A_n$ 可由 3-循环生成.
+]
+
+#lemma[
+  $n >= 5$ 时, 所有 3-循环都是共轭的.
+]
+
+#theorem[
+  $A_n, n >= 5$ 是单群.
+]
+
+#proof[
+  设 $K$ 是 $A_n$ 的正规子群, $K != {e}$, 要证 $K = A_n$.
+  由引理1知只需要证明包含所有3-循环, 由引理2知只需要证明包含一个3-循环.
 ]
 
 = Galois 理论
