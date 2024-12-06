@@ -11,7 +11,7 @@
 #let lemma = thmbox("lemma", "引理", fill: rgb("#eeffee"))
 #let corollary = thmplain(
   "corollary",
-  "Corollary",
+  "推论",
   base: "theorem",
   titlefmt: strong
 )
@@ -1107,4 +1107,59 @@ $x$ 的稳定化子就是中心化子.
 
 证明太复杂了, 略 :(
 
+== 可解群
+
+#definition[
+  设群 $G$, 若存在一个正规子群链 $G = G_0 lt.tri G_1 lt.tri ... lt.tri G_s = {e}$, 使得 $G_(i+1) lt.tri G_i$ 是交换群, 则称 $G$ 是可解群.
+]
+
+对于有限群，有一个等价的定义为：一可解群为一有着其商群皆为素数阶的循环群之合成列的群。
+
+#theorem[Feit-Thompson 定理][
+  任意奇阶有限群都是可解群.
+]
+
+
 = Galois 理论
+
+回顾一下在域论最后的两个问题:
+
+Q1. $E "/" F$ 是有限扩张, $G = "Gal"(E "/" F)$ 是有限群, 我们可以定义 $F' = "Inv"(G)$ 由定义可知 $F subset.eq F'$. 问题是  $F'$ 与 $F$ 能否相等?
+
+Q2. 有 $E$ 域, $G <= "Aut"(E)$, 我们有 $F = "Inv"(G)$, 其中 $E "/" F$ 是有限扩张, 于是 $G' = "Gal"(E "/" F)$ 是有限群, 由定义可知 $G subset.eq G'$. 问题是 $G$ 与 $G'$ 能否相等?
+
+对于 Q2, 我们的结论是肯定的, 这也被称为 Artin 定理.
+而对于 Q1, 我们可以直接定义满足这样性质的扩张为 Galois 扩张, 但这样定义太过于麻烦了,我们需要一个更好的刻画.
+
+而在后续的工作中, 我们会引入正规扩张和可分扩张的概念, 并证明正规+可分可以推出 Galois 扩张.
+
+== 分裂域
+
+#definition[
+  假设域 $F$, $f in F[x]$ 首一, 若有 $F$ 的扩域 $E$ 满足:
+  1. $f$ 在 $E$ 中可分解为一次因子的乘积 $f = (x - a_1) ... (x - a_n)$;
+  2. $E = F(a_1, ..., a_n)$;
+  则称 $E$ 是 $f$ 的分裂域.
+]
+
+#lemma[
+  如果 $f in F[x]$ 不可约, 则存在 $F$ 的扩域 $E$ 使得 $f$ 在 $E$ 中至少有一个根.
+]
+
+#proof[
+  取 $E = F[x] slash (f(x))$. 首先 $F[x]$ 是主理想整环, $f$ 不可约, 所以 $(f)$ 是极大理想, 从而 $E$ 是域.
+  考虑 $alpha = x + f(alpha) in E$, 而 $f(alpha) = f(x) + (f(alpha)) = (f(alpha)) = 0 in E$.
+]
+
+#corollary[
+  如果 $f in F[x], deg f >= 1$, 则存在 $F$ 的扩域 $E$ 使得 $f$ 在 $E$ 中至少有一个根.
+]
+
+#theorem[
+  如果 $f in F[x]$, 则存在 $F$ 的扩域 $E$ 使得 $f$ 在 $E$ 中分解为一次因子的乘积, 即分裂域存在.
+]
+
+#theorem[
+  这样的扩域是唯一的.(同构意义下).
+]
+
