@@ -1198,3 +1198,98 @@ Q2. 有 $E$ 域, $G <= "Aut"(E)$, 我们有 $F = "Inv"(G)$, 其中 $E "/" F$ 是
 ]
 
 == Galois 扩张
+
+#definition[
+  假设 $E slash F$ 是有限扩张, 若 $E$ 是 $F$ 是一个代数扩张, 若它是可分且正规的, 则称 $E slash F$ 是 Galois 扩张.
+]
+
+这门课我们只考虑有限Galois扩张.
+
+#theorem[
+  设 $E slash F$ 有限扩张, 则以下条件等价:
+  1. $E slash F$ 是 Galois 扩张;
+  2. $E$ 是 $F$ 上某个可分多项式的分裂域;
+  3. $F$ 是 $"Aut"(E slash F)$ 的某一个有限子群的不动域.
+]
+
+$G = "Gal"(E slash F)$, 记 $Sigma = {H | H <= G}$, $Omega = {K | F subset.eq K subset.eq E}$.
+我们考虑下面两组映射, $phi: Sigma -> Omega , H |-> "Inv"(H)$, $psi: Omega -> Sigma, K |-> "Gal"(E slash K )$.
+
+#theorem[
+  设 $E slash F$ 是有限Galoi扩张, 则
+  1. $phi, psi$ 互为逆;
+  2. 对于 $H in Sigma$, $|H| = [E: phi(H)][phi(H): F] = [G:H]$.
+  3. $H$ 是 $G$ 的正规子群 $<=>$ $phi(H)$ 是 $F$ 的正规扩张.
+]
+
+在得到了 Galois 对应定理之后, 我们最后要回答的就是那个经典的问题: 根式求解.
+事实上我们最后要证明的定理是:
+
+#theorem[
+  设 $f in QQ[x]$, $E$ 是 $f$ 的分裂域, $G = "Gal"(E slash QQ)$, 则 $f$ 可根式求解 $<=> $ $G$ 是可解群.
+]
+
+首先我们要定义什么叫根式求解.
+考虑一组扩张 $E = F(alpha_1, alpha_2, ..., alpha_n)$,
+如果 $alpha_1^(d_1) in F, F subset.eq F(alpha_1)$, $alpha_2^(d_2) in F(alpha_1), F(alpha_1) subset.eq F(alpha_1, alpha_2)$, ..., $alpha_n^(d_n) in F(alpha_1, ..., alpha_(n-1)), F(alpha_1, ..., alpha_(n-1)) subset.eq F(alpha_1, ..., alpha_n)$, 也就是说每次都可以通过一个对当前域中的某个元素开根号来得来下一个说需要的元素,
+我们称这样的扩张是根式求解的.
+
+而为了讨论这个问题, 对于形如 $F(alpha_1)$ 这样的域的研究就必不可少, 也就引出了下一节的内容.
+
+== 分圆域
+
+#definition[
+  设 $F$ 是特征零的域, $E$ 是 $F$ 上的多项式 $x^n - 1$ 的分裂域, 则称 $E$ 是 $F$ 的 $n$ 次分圆域.
+]
+
+#definition[
+  1. 设 $E slash F$ 是一个有限 Galois 扩张, $G = "Gal"(E slash F)$, 若 $G$ 是可解/循环/交换群, 则称 $E slash F$ 是可解/循环/交换扩张.
+  2. 设 $E = F(alpha)$ 且 $n$ 是使得 $alpha^n in F$ 的最小的正整数, 则称 $E slash F$ 是一个 $n$ 次根扩张.
+]
+
+#theorem[
+  1. $F$ 的 $n$ 次根扩张是循环扩张且 $|G| = n$.
+  2. 若 $E$ 是 $F$ 的循环扩张, 设 $[E:F] = n$, 则存在 $d in E $, 使得 $E = F(d)$ 且 $d^n in F$.
+]
+
+#theorem[
+  设 $E slash F$ 是有限扩张, 则 $E$ 是单扩张充要条件是 $E$ 和 $F$ 之间只有有限个中间域.
+]
+
+== 一元多项式方程的可解性
+
+#definition[
+  设 $f in F[x]$ 非零首一, 若存在一个域扩张的列 $F = F_0 subset.eq F_1 subset.eq ... subset.eq F_s = K$, 使得 $F_(i+1) = F_i (alpha_i)$, $alpha_i^(d_i) in F_i$, 且 $f$ 在 $K$ 中可以完全分解, 
+  则称 $K slash F$ 的一个根塔.
+]
+
+#lemma[
+  设 $f in F[x]$, $K$ 是 $F$ 的一个扩域, 则 $f in K[x]$.
+  此时 $G_K (f)$同构于 $G_F (f)$ 的一个子群.
+]
+
+#lemma[
+  设 $E slash F$ 有一个根塔 $F = F_0 subset.eq F_1 subset.eq ... subset.eq F_r = K$, 其中 $F_(i+1) = F_i (d_i)$, $d_i^(n_i) in F_i$,
+  若 $K slash F $ 是 $E slash F$ 的正规闭包, 则 $K slash F$ 也有一个根塔且基中出现的根的次数仍在 ${n_0, ..., n_r}$ 中.
+]
+
+#theorem("Galois 判据")[
+  设 $f in F[x]$, $E$ 是 $f$ 的分裂域, 则 $f$ 可根式求解 $<=>$ $G_F (f)$ 是可解的.
+]
+
+#proof[
+  1. ($<==$) 已知 $G_F (f)$ 可解, 设阶数为 $m$, $E$ 是 $f$ 的分裂域, $G_F (f) = "Gal"(E slash F)$.
+  设 $F_1 = F(z)$, $z$ 是 $m$ 次本原单位根, 则 $z^m = 1$, 从而 $F_1 slash F$ 是根式扩张.
+  再记 $ K = E(z)$, 则 $k$ 是 $f in F_1 [x]$ 的分裂域.
+  由引理, 考虑 $F subset.eq F_1$, 则 $G_F_1 (f) < G_F (f) = "Gal"(E slash F)$,
+  因为这是可解群, 所以 $"Gal"(K slash F_1)$ 也是可解群.
+  设 $H = "Gal"(K slash F_1)$ 的合成列为 $H_0 supset.eq H_1 supset.eq ... supset.eq H_s = {e}$, 且 $H_i slash H_(i+1)$ 是素数阶循环群.
+  由 Galois 对应定理, 每个 $H_i$ 都对应一个不动域, 于是有一串不动域 $F_i$, 且都是正规扩张, $[F_(i+1): F_i] = p_i$ 是素数.
+  $p_i | m$, 所以 $z^(m/p_i)$ 就是 $p_i$ 次本原单位根, 因为 $F_1$ 包含 $z$, 所以每个 $F_i$ 都包含单位根.
+  由上一节的定理(...) 知道这一定是根式扩张, $f$ 可根式求解.
+  2. ($==>$) 存在带根塔的域扩张.
+]
+
+最后一个问题是给定一个多项式之后该如何计算它的 Galois 群, 有一个 Dedekind 定理.
+
+完结撒花! (虽然后面笔记我基本都摆了...)
